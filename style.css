@@ -2,11 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 body{
     width: 100vw;
     height: 100vh;
     position: relative;
+    background-image: url(bg.png);
 }
 .main-container{
     position: absolute;
@@ -14,5 +16,97 @@ body{
     right: 30px;
     width: 500px;
     height: 700px;
-    border: 2px solid black;
+    border-radius: 20px;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    background-image: url(bg2.png);
+    overflow: hidden;
+}
+.left-header{
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    font-size: 25px;
+    svg{
+        padding: 5px;
+        fill: rgb(220, 158, 158);
+        background-color: white;
+        border-radius: 50px;
+    }
+}
+.right-header{
+    display: flex;
+    align-items: center;
+    button{
+       background-color: rgba(255, 255, 255, 0);
+       border: none;
+       font-size: 30px;
+    }
+}
+
+.message-box{
+    display: flex;
+    margin: 0px 20px;
+    padding: 5px;
+    justify-content: space-between;
+    border: 1px solid #d4cece;
+    border-radius: 30px;
+    overflow: hidden;
+    input{
+        padding: 10px;
+        width: 100%;
+        border: none;
+    }
+    .attachments{
+        display: flex;
+        gap: .5rem;
+        button{
+            background-color: rgba(255, 255, 255, 0);
+            border: none;
+            font-size: 30px;
+        }
+    }
+}
+.chat-body{
+    padding: 20px 15px;
+    padding-bottom: 10px;
+    position: relative;
+}
+.message-text{
+    padding: 10px;
+    width: 300px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.bot-message{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    svg{
+        padding: 5px;
+        background-color: rgb(220, 158, 158);
+        width: 40px;
+        height: 40px;
+        fill: white;
+        border-radius: 50px;
+    }
+}
+.user-message{
+    position: relative;
+    left: 165px;
+}
+.bot{
+    border-bottom-left-radius: 0;
+    background-color: rgb(248, 212, 212);
+}
+.user{
+    border-bottom-right-radius: 0;
+    background-color: rgb(220, 158, 158);
 }
