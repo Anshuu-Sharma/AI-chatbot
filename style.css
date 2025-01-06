@@ -59,10 +59,12 @@ body{
     border: 1px solid #d4cece;
     border-radius: 30px;
     overflow: hidden;
+
     input{
         padding: 10px;
         width: 100%;
         border: none;
+        outline: none;
     }
     .attachments{
         display: flex;
@@ -74,14 +76,29 @@ body{
         }
     }
 }
+#send{
+    color: white;
+    background-color: rgb(220, 158, 158);
+    border-radius: 50px;
+    padding: 3px;
+    display: none;
+}
+#send:hover{
+    background-color: rgb(216, 184, 184);
+}
+
+
 .chat-body{
     padding: 20px 15px;
     padding-bottom: 10px;
     position: relative;
+    width: 100%;
+    height: 78%;
+    overflow-y: scroll;
 }
 .message-text{
     padding: 10px;
-    width: 300px;
+    max-width: 300px;
     border-radius: 20px;
     margin-bottom: 10px;
 }
@@ -91,7 +108,7 @@ body{
     align-items: center;
     svg{
         padding: 5px;
-        background-color: rgb(220, 158, 158);
+        background-color: rgb(240, 18, 18);
         width: 40px;
         height: 40px;
         fill: white;
@@ -99,14 +116,57 @@ body{
     }
 }
 .user-message{
-    position: relative;
-    left: 165px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 .bot{
     border-bottom-left-radius: 0;
     background-color: rgb(248, 212, 212);
 }
 .user{
+    width: fit-content;
+    word-wrap: break-word;
     border-bottom-right-radius: 0;
     background-color: rgb(220, 158, 158);
+}
+.thinking-indicator{
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+.dot{
+    width: 7px;
+    height: 7px;
+    border-radius: 10px;
+    opacity: 0.8;
+    margin: 2px;
+    background-color: rgb(186, 129, 129);
+    animation: dotPulse 1.5s ease-in-out infinite;
+}
+.dot:nth-child(1){
+    animation-delay: 0.4s;
+}
+.dot:nth-child(2){
+    animation-delay: 0.2s;
+}
+.dot:nth-child(3){
+    animation-delay: 0.1s;
+}
+@keyframes dotPulse {
+    0%, 44%{
+        transform: translateY(0);
+    }
+    27%{
+        opacity: 0.4;
+        transform: translateY(-8px);
+    }
+    44%{
+        opacity: 0.3;
+    }
+}
+
+.thinking{
+    display: none;
 }
