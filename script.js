@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const chatBody = document.querySelector(".chat-body");
     const attachmentAlert = document.querySelector(".attachment-confirmed");
     const cancelAttachment = document.querySelector("#file-cancel-btn");
+    const containerToggleUp = document.querySelector("#container-toggle-up");
+    const containerToggleDown = document.querySelector("#container-toggle-down");
+    var containerToggler = true;
     const userData = {
         message: null,
         file: {
@@ -13,7 +16,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             mimi_type: null
         }
     }
-    
     //API setup
     const API_KEY = 'AIzaSyC5o5WDtts25fEGQdJzUSmQEnMghGNmpdQ';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -186,4 +188,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.querySelector(".footer-container").appendChild(picker);
     fileInputBtn.addEventListener("click", () => fileInput.click());
+
+    containerToggleUp.addEventListener("click", () =>{
+        if(containerToggler){
+            document.querySelector(".main-container").style.display = "flex";
+            containerToggler = false;
+            containerToggleUp.textContent = "cancel";
+        }
+        else if(containerToggler == false){
+            containerToggler = true;
+            document.querySelector(".main-container").style.display = "none";
+            containerToggleUp.textContent = "forum";
+        }
+    });
+    containerToggleDown.addEventListener("click", () =>{
+        document.querySelector(".main-container").style.display = "none";
+        containerToggleUp.textContent = "forum";
+    });
+
 });
