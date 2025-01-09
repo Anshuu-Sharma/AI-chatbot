@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    // Defining required constants and variable
     const messageArea = document.getElementById('message-area');
     const sendButton = document.getElementById('send');
     const fileInput = document.querySelector("#file-input");
@@ -16,11 +17,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             mimi_type: null
         }
     }
+
     //API setup
     const API_KEY = 'AIzaSyC5o5WDtts25fEGQdJzUSmQEnMghGNmpdQ';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-    //used focus and blur to only show send button when the user clicks on the message area.
+    //Used focus and blur to only show send button when the user clicks on the message area.
     messageArea.addEventListener('focus', () => {
         sendButton.style.display = 'block';
     });
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
     
-    //generate bot response 
+    //Generate bot response and show error if any
     const generateBotResponse = async (incomingMessageDiv) =>{
         const messageElement = incomingMessageDiv.querySelector(".message-text");
 
@@ -63,7 +65,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     };
 
-    // Create div function
+    // Create div function for chat area
     const createMessageElement = (content, classes) => {
         const div = document.createElement("div");
         div.classList.add("message", classes);
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         return div;
     };
 
-    //function to handle outgoing user messages
+    //Function to handle outgoing user messages in chat area
     const handleOutgoingMessage = () => {
         const messageContent = `
                                 ${userData.file.data ? `<img src="data:${userData.file.mime_type};base64,${userData.file.data}" />` : ""}
@@ -82,7 +84,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         chatBody.appendChild(outgoingMessageDiv);
         chatBody.scrollTo({top:chatBody.scrollHeight, behavior: "smooth"});
 
-        //function to show the thinking indicator dots
+        //Function to show the thinking indicator dots
         setTimeout(() => {
             const messageContent = 
             ` <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 1024 1024">
@@ -103,13 +105,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         },1000);
     };
 
+    // Helper function for attachment case
     const attachmentHandler = () =>{
         fileInputBtn.style.display = "block";
         cancelAttachment.style.display = "none";
         attachmentAlert.textContent = "File uploaded successfully!";
 
     }
-    // event listeners for sending messages when either a user clicks on the send button or presses enter button
+
+    // Event listeners for sending messages when either a user clicks on the send button or presses enter button
     sendButton.addEventListener('click', () =>{
         const userMessge = messageArea.value.trim();
         if(userMessge){
@@ -131,7 +135,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    // handle file input change
+    // Handle file input change i.e. when an attachment is added
     fileInput.addEventListener("change", () => {
         const file = fileInput.files[0];
         if(!file) return;
@@ -156,7 +160,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         reader.readAsDataURL(file);
     });
 
-
+    //Cancel attachment option 
     cancelAttachment.addEventListener("click", () => {
         userData.file = null;
         attachmentHandler();
@@ -167,7 +171,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }, 2000);
     });
 
-
+    // Integrating Emoji in message box section
     const picker = new EmojiMart.Picker({
        theme: "light",
        skinTonePosition: "none",
@@ -185,10 +189,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
        }
     });
-
     document.querySelector(".footer-container").appendChild(picker);
+
     fileInputBtn.addEventListener("click", () => fileInput.click());
 
+    // Logic for toggling the chat bot up and down
     containerToggleUp.addEventListener("click", () =>{
         if(containerToggler){
             document.querySelector(".main-container").style.display = "flex";
