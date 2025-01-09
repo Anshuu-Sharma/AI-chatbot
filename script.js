@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fileInputBtn = document.querySelector("#file-input-btn");
     const chatBody = document.querySelector(".chat-body");
     const attachmentAlert = document.querySelector(".attachment-confirmed");
+    const cancelAttachment = document.querySelector("#file-cancel-btn");
     const userData = {
         message: null,
         file: {
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
             messageElement.innerText = apiResponseText;
             userData.file.data = null;
+           
         }catch(error){
             console.log(error);
             messageElement.innerText = error.message;
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             incomingMessageDiv.classList.remove("thinking");
             chatBody.scrollTo({top: chatBody.scrollHeight, behavior:"smooth"});
         }
-    }
+    };
 
     // Create div function
     const createMessageElement = (content, classes) => {
@@ -65,7 +67,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         div.classList.add("message", classes);
         div.innerHTML = content;
         return div;
-    }
+    };
 
     //function to handle outgoing user messages
     const handleOutgoingMessage = () => {
@@ -97,8 +99,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
             chatBody.appendChild(incomingMessageDiv);
             generateBotResponse(incomingMessageDiv);
         },1000);
-    }
+    };
 
+    const attachmentHandler = () =>{
+        fileInputBtn.style.display = "block";
+        cancelAttachment.style.display = "none";
+        attachmentAlert.textContent = "File uploaded successfully!";
+
+    }
     // event listeners for sending messages when either a user clicks on the send button or presses enter button
     sendButton.addEventListener('click', () =>{
         const userMessge = messageArea.value.trim();
@@ -106,14 +114,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
             userData.message = userMessge;
             handleOutgoingMessage();
             messageArea.value = '';
+            attachmentHandler();
+            document.body.classList.remove("show-emoji-picker");
         }
-    })
+    });
     messageArea.addEventListener("keydown", (e) => {
         const userMessge = e.target.value.trim();
         if(e.key === 'Enter' && userMessge){
             userData.message = userMessge;
             handleOutgoingMessage();
             e.target.value = '';
+            attachmentHandler();
+            document.body.classList.remove("show-emoji-picker");
         }
     });
 
@@ -121,6 +133,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fileInput.addEventListener("change", () => {
         const file = fileInput.files[0];
         if(!file) return;
+        attachmentAlert.textContent = "File uploaded successfully!";
+        fileInputBtn.style.display = "none";
+        cancelAttachment.style.display = "block";
         attachmentAlert.style.display = "block";
         setTimeout(() => {
             attachmentAlert.style.display = "none";
@@ -133,11 +148,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 data: base64String,
                 mime_type: file.type
             }
-
             fileInput.value = "";
         }
 
         reader.readAsDataURL(file);
-    })
+    });
+
+
+    cancelAttachment.addEventListener("click", () => {
+        userData.file = null;
+        attachmentHandler();
+        attachmentAlert.textContent = "File removed successfully!";
+        attachmentAlert.style.display = "block";
+        setTimeout(() => {
+            attachmentAlert.style.display = "none";
+        }, 2000);
+    });
+
+
+    const picker = new EmojiMart.Picker({
+       theme: "light",
+       skinTonePosition: "none",
+       prreviewPosition: "none" ,
+       onEmojiSelect: (emoji) => {
+        const {selectionStart : start, selectionEnd: end} = messageArea;
+        messageArea.setRangeText(emoji.native, start, end, "end");
+        messageArea.focus();
+       },
+       onClickOutside: (e) => {
+        if(e.target.id === "emoji-picker"){
+            document.body.classList.toggle("show-emoji-picker");
+        } else{
+            document.body.classList.remove("show-emoji-picker");
+        }
+       }
+    });
+
+    document.querySelector(".footer-container").appendChild(picker);
     fileInputBtn.addEventListener("click", () => fileInput.click());
 });

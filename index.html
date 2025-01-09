@@ -7,10 +7,11 @@
     <title>AI ChatBot</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />   
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
+    
     <div class="main-container">
         <div class="header">
             <div class="left-header">
@@ -40,7 +41,7 @@
                     Hey there! <br /> How can I help you today?
                 </div>
             </div>
-            
+
             <!-- <div class="message user-message">
                 <div class="message-text">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, perferendis!
@@ -65,20 +66,27 @@
         <div class="attachment-confirmed">File added successfully!</div>
 
         <!-- message area -->
-
-        <div class="message-box">
-            <input type="text" placeholder="Message...." id="message-area" required>
-            <div class="attachments">
-                <button class="material-symbols-rounded">mood</button>
-                <div class="file-upload-wrapper">
-                    <input type="file" accept="images/*" id="file-input" hidden>
-                    <button class="material-symbols-rounded" id="file-input-btn">attach_file</button>
+        <div class="footer-container">
+            <div class="message-box">
+                <input type="text" placeholder="Message...." id="message-area" required>
+                <div class="attachments">
+                    <button id="emoji-picker" class="material-symbols-rounded">mood</button>
+                    <div class="file-upload-wrapper">
+                        <input type="file" accept="images/*" id="file-input" hidden>
+                        <button class="material-symbols-rounded" id="file-input-btn">attach_file</button>
+                        <button class="material-symbols-rounded" id="file-cancel-btn">cancel</button>
+                    </div>
+                    <button class="material-symbols-rounded" id="send">send</button>
                 </div>
-                <button class="material-symbols-rounded" id="send">send</button>
             </div>
         </div>
+
     </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
     <script src="script.js"></script>
+
 </body>
 
 </html>
